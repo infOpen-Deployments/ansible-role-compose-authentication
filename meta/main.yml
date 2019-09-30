@@ -1,0 +1,23 @@
+---
+
+galaxy_info:
+  author: 'Alexandre Chaussier'
+  description: 'Ansible role to deploy Keycloak docker service'
+  company: 'Infopen (https://infopen.pro)'
+  license: '""'
+  min_ansible_version: '2.5'
+  github_branch: 'master'
+  platforms:
+    - name: 'Debian'
+      versions:
+        - 'stretch'
+    - name: 'EL'
+      versions:
+        - '7'
+    - name: 'Ubuntu'
+      versions:
+        - 'bionic'
+  galaxy_tags:
+    - 'docker'
+    - 'web'
+dependencies: []

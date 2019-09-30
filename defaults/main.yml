@@ -1,0 +1,110 @@
+---
+
+# Defaults vars file for keycloak role
+
+# Ansistrano configuration
+authentication_git_repo: 'https://github.com/infOpen-Deployments/compose-authentication.git'
+authentication_git_branch: 'develop'
+
+
+# Role configuration
+authentication_compose_override:
+  version: '3.4'
+authentication_compose_options: ''
+authentication_compose_path: '/usr/local/bin/docker-compose'
+authentication_files: []
+authentication_networks:
+  - name: 'services'
+authentication_project_name: 'authentication'
+authentication_templates:
+  - src: "templates/env/keycloak.env.j2"
+    dest: "{{ ansistrano_release_path.stdout }}/env/keycloak.env"
+  - src: "templates/env/openldap.env.j2"
+    dest: "{{ ansistrano_release_path.stdout }}/env/openldap.env"
+  - src: "templates/env/postgres.env.j2"
+    dest: "{{ ansistrano_release_path.stdout }}/env/postgres.env"
+  - src: "templates/env/postgres_exporter.env.j2"
+    dest: "{{ ansistrano_release_path.stdout }}/env/postgres_exporter.env"
+  - src: "templates/gatekeepers/phpldapadmin.yml.j2"
+    dest: "{{ ansistrano_release_path.stdout }}/config/gatekeepers/phpldapadmin.yml"
+  - src: "templates/dot_env.j2"
+    dest: "{{ ansistrano_release_path.stdout }}/.env"
+authentication_volumes: []
+
+
+#
+# Environment
+#
+
+# .env
+authentication_exporter_listen_ip_address: '127.0.0.1'
+authentication_logging_max_file: 2
+authentication_logging_max_size: '25m'
+authentication_listen_ip_address: '127.0.0.1'
+authentication_keycloak_image_name: 'jboss/keycloak'
+authentication_keycloak_image_version: '7.0.0'
+authentication_keycloak_gatekeeper_image_name: 'keycloak/keycloak-gatekeeper'
+authentication_keycloak_gatekeeper_image_version: '7.0.0'
+authentication_postgres_image_name: 'postgres'
+authentication_postgres_image_version: '10.6'
+authentication_postgres_exporter_image_name: 'wrouesnel/postgres_exporter'
+authentication_postgres_exporter_image_version: 'v0.4.7'
+authentication_openldap_image_name: 'osixia/openldap'
+authentication_openldap_image_version: '1.2.4'
+authentication_phpldapadmin_image_name: 'osixia/phpldapadmin'
+authentication_phpldapadmin_image_version: '0.8.0'
+authentication_backup_worker_image_name: 'infopen/cron-scripts'
+authentication_backup_worker_image_version: '3.10.0'
+
+# env/keycloak.env
+authentication_keycloak_db_vendor: 'POSTGRES'
+authentication_keycloak_db_addr: "{{ authentication_postgres_host }}"
+authentication_keycloak_db_database: "{{ authentication_postgres_db }}"
+authentication_keycloak_db_user: "{{ authentication_postgres_user }}"
+authentication_keycloak_db_password: "{{ authentication_postgres_password }}"
+authentication_keycloak_admin_user: 'admin'
+authentication_keycloak_admin_password: 'password'
+authentication_keycloak_hostname: 'my.hostname.foo'
+authentication_keycloak_proxy_address_forwarding: true
+
+# env/openldap.env
+authentication_ldap_base_dn: 'dc=internal,dc=infopen,dc=net'
+authentication_ldap_domain: 'infopen.net'
+authentication_ldap_log_level: 256
+authentication_ldap_organization: 'Infopen'
+authentication_ldap_rfc2307bis_schema: True
+authentication_ldap_hostname: 'openldap'
+authentication_ldap_tls: False
+authentication_ldap_admin_password: 'adminpasswd'
+authentication_ldap_config_password: 'configpasswd'
+authentication_ldap_readonly_user: True
+authentication_ldap_readonly_user_username: 'rouser'
+authentication_ldap_readonly_user_password: 'ropasswd'
+
+# env/postgres.env
+authentication_postgres_db: 'keycloak'
+authentication_postgres_host: 'postgres'
+authentication_postgres_user: 'keycloak'
+authentication_postgres_password: 'password'
+
+# env/postgres_exporter.env
+authentication_postgres_exporter_data_source_uri: "postgresql://postgres:5432/{{ authentication_postgres_db }}?sslmode=disable"
+authentication_postgres_exporter_data_source_user: "{{ authentication_postgres_user }}"
+authentication_postgres_exporter_data_source_pass: "{{ authentication_postgres_password }}"
+
+
+#
+# Gatekeepers
+#
+
+# PHPLdapadmin
+authentication_gatekeepers_phpldapadmin:
+  client-id: 'phpldapadmin'
+  client-secret: 'foobar'
+  discovery-url: 'http://192.168.1.82:8080/auth/realms/test'
+  redirection-url: 'http://phpldapadmin.localhost/'
+  enable-default-deny: true
+  encryption_key: 'foobar'
+  listen: '0.0.0.0:3000'
+  upstream-url: 'http://phpldapadmin:80'
+  secure-cookie: false
