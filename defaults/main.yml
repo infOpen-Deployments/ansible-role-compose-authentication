@@ -4,7 +4,7 @@
 
 # Ansistrano configuration
 authentication_git_repo: 'https://github.com/infOpen-Deployments/compose-authentication.git'
-authentication_git_branch: 'develop'
+authentication_git_branch: '0.1.0'
 
 
 # Role configuration
