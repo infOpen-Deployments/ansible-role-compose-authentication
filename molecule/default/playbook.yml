@@ -1,0 +1,29 @@
+---
+
+# Role tests
+
+- name: 'Converge | Prerequisites tasks'
+  hosts: 'all'
+  gather_facts: False
+  tasks:
+    - block:
+        - name: 'PREREQUISITES | APT | Do an apt-get update'
+          become: True
+          raw: 'apt-get update -qq'
+          changed_when: False
+        - name: 'PREREQUISITES | APT | Install git, net-tools, python 2.7 and rsync'
+          become: True
+          raw: 'apt-get install -qq git net-tools python2.7 rsync'
+          changed_when: False
+      when: "inventory_hostname in ['keycloak-docker-stretch', 'keycloak-docker-bionic']"
+    - name: 'PREREQUISITES | YUM | Install git, net-tools and rsync'
+      become: True
+      raw: 'yum install -y git net-tools rsync'
+      changed_when: False
+      when: "inventory_hostname == 'keycloak-docker-centos'"
+
+
+- name: 'Converge | Main tasks'
+  hosts: 'all'
+  roles:
+    - role: "ansible-role-keycloak"

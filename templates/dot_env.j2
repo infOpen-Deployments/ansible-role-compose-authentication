@@ -1,0 +1,46 @@
+# {{ ansible_managed }}
+
+# GENERAL
+EXPORTER_LISTEN_IP_ADDRESS={{ authentication_exporter_listen_ip_address }}
+LISTEN_IP_ADDRESS={{ authentication_listen_ip_address }}
+LOGGING_MAX_FILE={{ authentication_logging_max_file }}
+LOGGING_MAX_SIZE={{ authentication_logging_max_size }}
+
+
+# KEYCLOAK
+KEYCLOAK_IMAGE_NAME={{ authentication_keycloak_image_name }}
+KEYCLOAK_IMAGE_VERSION={{ authentication_keycloak_image_version }}
+
+
+# KEYCLOAK GATEKEEPER
+KEYCLOAK_GATEKEEPER_IMAGE_NAME={{ authentication_keycloak_gatekeeper_image_name }}
+KEYCLOAK_GATEKEEPER_IMAGE_VERSION={{ authentication_keycloak_gatekeeper_image_version }}
+
+
+# POSTGRES
+POSTGRES_IMAGE_NAME={{ authentication_postgres_image_name }}
+POSTGRES_IMAGE_VERSION={{ authentication_postgres_image_version }}
+
+
+# POSTGRES EXPORTER
+POSTGRES_EXPORTER_IMAGE_NAME={{ authentication_postgres_exporter_image_name }}
+POSTGRES_EXPORTER_IMAGE_VERSION={{ authentication_postgres_exporter_image_version }}
+
+
+#
+# OPEN LDAP
+#
+OPENLDAP_IMAGE_NAME={{ authentication_openldap_image_name }}
+OPENLDAP_IMAGE_VERSION={{ authentication_openldap_image_version }}
+
+
+#
+# PHP LDAP ADMIN
+#
+PHPLDAPADMIN_IMAGE_NAME={{ authentication_phpldapadmin_image_name }}
+PHPLDAPADMIN_IMAGE_VERSION={{ authentication_phpldapadmin_image_version }}
+
+
+# BACKUP WORKER
+BACKUP_WORKER_IMAGE_NAME={{ authentication_backup_worker_image_name }}
+BACKUP_WORKER_IMAGE_VERSION={{ authentication_backup_worker_image_version }}
